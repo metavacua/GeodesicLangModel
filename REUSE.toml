@@ -1,0 +1,62 @@
+# SPDX-FileCopyrightText: 2026 metavacua
+# SPDX-License-Identifier: CC-BY-SA-4.0
+#
+# REUSE 3.3 configuration for GeodesicLangModel.
+#
+# Licensing model:
+#   * General default:   CC-BY-SA-4.0    (creative works)
+#   * Specific override: AGPL-3.0-or-later (software, and data that
+#                        corresponds to a program)
+#
+# Per-file SPDX headers always win over annotations declared here.
+# Data files known to correspond to programs should be added to the
+# AGPL-3.0-or-later annotation block (or carry a per-file SPDX header).
+
+version = 1
+SPDX-PackageName = "GeodesicLangModel"
+SPDX-PackageSupplier = "metavacua <https://github.com/metavacua>"
+SPDX-PackageDownloadLocation = "https://github.com/metavacua/GeodesicLangModel"
+
+# --- Default: creative works -------------------------------------------------
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 metavacua"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+# --- Override: software and program-corresponding data -----------------------
+
+[[annotations]]
+path = [
+    "src/**",
+    "scripts/**",
+    "tools/**",
+    "**/*.py",
+    "**/*.ipynb",
+    "**/*.sh",
+    "**/*.bash",
+    "**/*.zsh",
+    "**/*.js",
+    "**/*.ts",
+    "**/*.mjs",
+    "**/*.cjs",
+    "**/*.rs",
+    "**/*.go",
+    "**/*.c",
+    "**/*.h",
+    "**/*.cpp",
+    "**/*.hpp",
+    "**/*.lql",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 metavacua"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# --- Trivial / non-copyrightable files --------------------------------------
+
+[[annotations]]
+path = ["**/.gitkeep", "**/.gitignore", "**/.gitattributes"]
+precedence = "override"
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"
