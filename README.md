@@ -5,15 +5,39 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # GeodesicLangModel
 
-Systematic experimental testing of the **Geometric Coherence Framework (GCF)** — the theory that LLMs are discrete geodesic graphs approximating continuous Riemannian manifolds, where coherence depends on alignment between three structures:
+Architectural hub for the **Geometric Coherence Framework (GCF)** research program and its production goal: **swarm language models** — specialist LMs compiled just-in-time from graph databases, operating as a coordinated ensemble of coding agents.
+
+## The Core Pipeline
+
+```
+GitHub repo / graph DB
+        ↓  graphify: repo → queryable knowledge graph
+SPARQL store (Oxigraph)  ←→  RDF/OWL endpoints / Wikimedia dumps
+        ↓  LARQL: graph → vindex (category-theoretical object)
+    vindex
+        ↙         ↘
+decompile/query   compile/synthesize
+   (LQL)            (mlc-llm / web-llm)
+        ↘         ↙
+  specialist LM  (JIT, on-demand)
+        ↓
+  coding agent swarm  (goose fork + tabby fork)
+        ↓  orientation layer
+  open-deep-research + SPARQL/GraphQL/SQL synthesis
+        ↑  (refinement loop)
+```
+
+The full round-trip: **production → distillation → decompilation → compilation → synthesis → refinement**
+
+## Geometric Coherence Framework (GCF)
+
+The theory that LLMs are discrete geodesic graphs approximating continuous Riemannian manifolds, where coherence depends on alignment between three structures:
 
 1. The **FFN graph** (stored relational structure)
 2. The **attention mechanism** (local metric / curvature encoding)
 3. The **residual stream** (current positional state)
 
-This repository is a research instrument: it designs, runs, logs, and analyzes falsifiable experiments against the GCF.
-
-## Hypotheses Under Test
+### Hypotheses Under Test
 
 | ID | Statement |
 |----|-----------|
@@ -23,6 +47,30 @@ This repository is a research instrument: it designs, runs, logs, and analyzes f
 | **H4** | The frozen graph diverges progressively from world-state after training cutoff, producing coordinate misalignment, not just knowledge gaps. |
 | **H5** | RAG injects correct facts but does not recalibrate attention navigation; reasoning over retrieved content fails systematically. |
 | **H6** | Operational incompleteness bound (Rosko, [arXiv:2511.21296](https://arxiv.org/abs/2511.21296)): some true propositions about an LLM's knowledge cannot be decided by any finite token-observation sequence. |
+
+## Research Constellation
+
+### Cluster 1 — Theoretical Foundation (in this repo)
+
+| Component | Location | Role |
+|-----------|----------|------|
+| LARQL toolchain | [`tools/larql/`](tools/larql/) | Core Rust + WASM toolchain; LLM weights → vindexes; LQL query/mutate; vindex = category-theoretical object |
+| CategoricalReasoner | [`reasoning/`](reasoning/) | Java + SPARQL algorithms for categorical logic; morphism algorithms; vindexes are category-theoretical objects in this sense |
+| Theory | [`theory/`](theory/) | LaTeX thesis + HTML proof pipeline; the GCF theoretical write-up |
+| Subclass ontology | [`ontology/subclass/`](ontology/subclass/) | Subclass ontology scaffold |
+| Experiments | [`experiments/`](experiments/) | Falsifiable experiment classes A–F against the GCF hypotheses |
+
+### Cluster 2 — LARQL Pipeline Layer (sibling forks)
+
+Toolchains for extending/reducing LARQL and realizing the round-trip. See [`RESEARCH_STACK.md`](RESEARCH_STACK.md).
+
+graphify · Oxigraph · mlc-llm · web-llm · wasmspec · seaography · async-graphql · graphql-parser
+
+### Cluster 3 — Coding Agent Harness (sibling forks)
+
+See [`agents/`](agents/) for the integration design.
+
+goose · tabby · web-llm · open-deep-research
 
 ## Experiment Classes
 
@@ -35,11 +83,38 @@ This repository is a research instrument: it designs, runs, logs, and analyzes f
 | **E** | Curvature proxy measurement | [`experiments/E_curvature_proxy/`](experiments/E_curvature_proxy/) |
 | **F** | Incompleteness boundary mapping | [`experiments/F_incompleteness_boundary/`](experiments/F_incompleteness_boundary/) |
 
-See [`EXPERIMENT_TEMPLATE.md`](EXPERIMENT_TEMPLATE.md) for the standard logging schema and [`registry.md`](registry.md) for the running experiment index.
+See [`EXPERIMENT_TEMPLATE.md`](EXPERIMENT_TEMPLATE.md) for the logging schema and [`registry.md`](registry.md) for the running index.
+
+## Quick Start
+
+```sh
+# Clone with all submodules
+git clone --recurse-submodules https://github.com/metavacua/GeodesicLangModel
+
+# Build LARQL (requires Rust stable + nightly proc-macro support)
+cd tools/larql
+cargo build --release
+
+# Run the LARQL REPL
+./target/release/larql repl
+
+# Run a Class A experiment
+# See experiments/A_vindex_roundtrip/README.md for instructions
+```
+
+## Key Documents
+
+| Document | Purpose |
+|----------|---------|
+| [`PIPELINE.md`](PIPELINE.md) | Full round-trip explained end-to-end |
+| [`CONVERGENCE.md`](CONVERGENCE.md) | Mathematical bridge: CategoricalReasoner ↔ LARQL vindexes |
+| [`DISCOVERIES.md`](DISCOVERIES.md) | Empirical observations from the SynthPlayground prototype series |
+| [`RESEARCH_STACK.md`](RESEARCH_STACK.md) | Full constellation map with all sibling repos |
+| [`AGENTS.md`](AGENTS.md) | Development guidance across all subsystems |
 
 ## References
 
-- LARQL toolchain: <https://github.com/chrishayuk/larql>
+- LARQL toolchain docs: [`tools/larql/docs/`](tools/larql/docs/)
 - Rosko, M. *Operational Incompleteness in Large Language Models.* [arXiv:2511.21296](https://arxiv.org/abs/2511.21296)
 - Mabrok, M. et al. *Curvature structure in transformer attention manifolds.* [arXiv:2603.22301](https://arxiv.org/abs/2603.22301)
 
@@ -47,27 +122,13 @@ See [`references/`](references/) for the maintained bibliography.
 
 ## Licensing
 
-This repository is **dual-licensed** and **[REUSE](https://reuse.software/)-compliant** (REUSE 3.x; tracked toward the 2026 REUSE workflow updates). License assignment is declared per-file via SPDX headers and `REUSE.toml`.
+Dual-licensed, **[REUSE](https://reuse.software/)-compliant**:
 
-| License | Scope | SPDX Identifier |
-|---------|-------|-----------------|
-| **[CC-BY-SA-4.0](LICENSES/CC-BY-SA-4.0.txt)** | *General default.* All creative works in the repository (prose, documentation, experiment logs, figures, prose-form data). | `CC-BY-SA-4.0` |
-| **[AGPL-3.0-or-later](LICENSES/AGPL-3.0-or-later.txt)** | *Specific override.* Software, and any data that corresponds to a program (i.e., data that is, or is known to encode, executable behavior). | `AGPL-3.0-or-later` |
-
-### Licensing Rationale
-
-A GitHub repository is a `schema.org/Collection` of `schema.org/CreativeWork` instances. CC-BY-SA-4.0 is the natural general license over creative works; AGPL-3.0-or-later is the specific license for the subclass of creative works that are software. There is a strict morphism CC-BY-SA-4.0 → GPL-family for compatibility purposes (per Creative Commons FAQ and FSF compatibility analysis), so this dual scheme is internally consistent.
-
-**Software-vs-data classification rule:**
-
-> Data that can be put in correspondence with a program is *precisely software* and is covered by **AGPL-3.0-or-later**. Data that cannot be, or is not known to be, in such correspondence is **CC-BY-SA-4.0** by default.
-
-This follows the Curry-Howard-style view that programs and data are interconvertible under a known correspondence; the license tracks the correspondence, not the file extension. Per-file SPDX tags resolve all cases.
-
-### Verifying License Compliance
+| License | Scope |
+|---------|-------|
+| **CC-BY-SA-4.0** | Creative works: prose, documentation, experiment logs, figures |
+| **AGPL-3.0-or-later** | Software and program-corresponding data |
 
 ```sh
 pipx run reuse lint
 ```
-
-A GitHub Actions workflow runs the same check on every push and pull request.
