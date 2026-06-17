@@ -51,14 +51,17 @@ See [`agents/stack.md`](agents/stack.md) for the integration design.
 
 ### 3. larql-cli lib/bin/interface split (W3)
 
-Separates `larql-cli` into:
-- `lib.rs` — command logic, wasm32-compilable
-- `bin/larql.rs` — OS entry point
-- `interface/` — wasm host exports vs native OS interface
+Separates `larql-cli` into three layers:
+- `lib.rs` — command logic that lives **inside the wasm host**; takes `&dyn VindexStorage` instead of `&Path`
+- `bin/larql.rs` — thin OS entry point; wires clap args + file I/O to lib functions
+- `interface/` — wasm host exports (`#[wasm_bindgen]` / WASI exports) vs native OS interface
 
-This is the architectural clarification that makes the wasm stratification manifest
-in the codebase. Milestone: `cargo build -p larql-cli --lib --target wasm32-unknown-unknown`
-succeeds with no changes to the canonical codebase contract.
+The key refactor: replace `&Path` args with `&dyn VindexStorage` throughout `lib.rs`.
+The OS native impl opens files; the in-memory impl holds bytes from the JS/WASI host;
+the result is a clean seam between inside-wasm and outside-wasm code.
+
+Milestone: `cargo build -p larql-cli --lib --target wasm32-unknown-unknown` succeeds.
+Runtime test targets: Firefox/Playwright (browser stratum), wasmer (WASI stratum).
 
 ### 4. Tabby integration (near-term harness)
 

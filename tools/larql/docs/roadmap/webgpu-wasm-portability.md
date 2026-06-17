@@ -58,26 +58,57 @@ making the partition explicit:
 
 ## larql-cli Split (Priority Focus)
 
-`larql-cli` is the wedge. It currently bundles:
-- Pure library logic (deserializable into a wasm host)
-- I/O plumbing (file read, stdout, stdin, signal handling)
-- The binary entry point
+`larql-cli` is the structural wedge that makes the wasm32 stratification explicit in
+the codebase. It currently bundles three concerns that must be cleanly separated:
 
-The refactor separates these into:
+| Concern | Must live | Rationale |
+|---------|-----------|-----------|
+| Command logic (parse statement, call crate) | **inside wasm host** | Pure function: input → output |
+| LQL executor, graph algorithms | **inside wasm host** | larql-core, larql-lql already wasm32-safe |
+| File I/O (open vindex, read weights) | **outside wasm host** | mmap/libc/hf-hub; VindexStorage seam is the abstraction |
+| Stdin/stdout/signal handling | **outside wasm host** | OS primitives |
+| clap argument parsing | **outside wasm host** | depends on std::env, OS signals |
+| HTTP fetch (hf:// URLs) | **outside wasm host** (native) / **JS fetch** (browser) | reqwest is gated by `http` feature; browser gets JS glue |
+
+The target structure:
 
 ```
-larql-cli/
-├── src/
-│   ├── lib.rs          ← command logic, fully wasm32-compilable
-│   ├── bin/
-│   │   └── larql.rs    ← thin OS entry point, wires IO to lib functions
-│   └── interface/
-│       ├── wasm.rs     ← wasm host interface (wasm_bindgen / WASI exports)
-│       └── native.rs   ← native OS interface (clap args → lib calls)
+larql-cli/src/
+├── lib.rs                  ← everything inside the wasm host
+│   ├── execute(stmt, storage: &dyn VindexStorage) → Result<Rows>
+│   ├── compile(vindex, output, fmt, storage: &dyn VindexStorage) → Result<()>
+│   └── ...                 (all command logic; takes VindexStorage instead of paths)
+├── bin/
+│   └── larql.rs            ← OS entry point: parse clap args → open files → call lib
+└── interface/
+    ├── wasm.rs             ← #[wasm_bindgen] / WASI exports: bridge JS/host to lib fns
+    └── native.rs           ← native OS IO: implement VindexStorage over real files
 ```
 
-The **interface boundary** is the seam between inside-wasm-host and outside-wasm-host.
-Everything in `lib.rs` must compile to `wasm32-unknown-unknown`. Everything in `bin/` stays native.
+**Key principle**: wherever `larql-cli` currently takes a `&Path`, it should take a
+`&dyn VindexStorage`. The OS native impl opens the file and wraps it; the in-memory
+impl holds bytes loaded by the JS host; the WASI impl uses WASI file descriptors.
+
+This refactor is purely additive — it does not change the binary behavior, only
+introduces the `lib.rs` boundary that wasm targets need.
+
+### Runtime targets per stratum
+
+| Stratum | Target triple | Runtime | Test harness |
+|---------|--------------|---------|--------------|
+| Compute | `wasm32v1-none` | any wasm host; wasmi preferred | `cargo test --target wasm32-unknown-unknown` with wasmi runner |
+| Browser | `wasm32-unknown-unknown` | Firefox (prod), Playwright (CI) | Playwright + wasm-pack test |
+| OS-like | `wasm32-wasip1` | wasmer (preferred); wasmtime + pulley (no-Cranelift hosts) | `wasmer run larql.wasm -- infer ...` |
+| Emscripten | `wasm32-unknown-emscripten` | Node.js | lower priority; derive from WASI path |
+
+Ubuntu x64 is the **primary OS compile and CI verification target** for all strata.
+macOS (Apple Silicon) is the primary native Metal target per the canonical ROADMAP.
+
+**On runtimes**: wasmtime is used upstream in `larql-cli` (`wasm-jit` feature with
+Cranelift). For hosts where Cranelift is absent (arm32, some embedded), pulley is the
+intended gap-filler; wasmi remains the universal fallback (pure Rust, runs anywhere
+including inside another wasm host). wasmer is the preferred WASI runtime for
+`wasm32-wasip1` because it supports WASIX and faster AOT without requiring Cranelift.
 
 ---
 
