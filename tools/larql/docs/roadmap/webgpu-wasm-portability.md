@@ -14,7 +14,7 @@ CPU track) documented in `ROADMAP.md` — it does not alter those tracks or the
 
 ## Motivation
 
-The production goal is **category-theoretical swarm language models** (*swarm categories*):
+The production goal is ***swarm categories*** (category-theoretical swarm language models):
 specialist LMs compiled JIT from graph databases and deployed wherever they are needed —
 browser, mobile, embedded, server. This requires LARQL to run in environments that are
 closed to native OS I/O: browser sandboxes, WASI runtimes, and GPU-WebGPU compute contexts.
@@ -27,17 +27,36 @@ along the wasm target hierarchy.
 
 ## Wasm32 Stratification Model
 
-Three strata, ordered from most to least restrictive:
+Four strata, ordered from most to least restrictive:
 
 | Stratum | Target | Primary runtime | I/O model |
 |---------|--------|-----------------|-----------|
 | **Compute** | `wasm32v1-none` | any wasm host, anywhere | no std, no I/O at all |
 | **Browser** | `wasm32-unknown-unknown` | Firefox / Playwright (test), WebGPU browsers (prod) | JS glue; no direct OS I/O |
 | **OS-like** | `wasm32-wasip1` | wasmer (preferred), wasmtime (upstream), pulley (no-Cranelift gap) | WASI P1 file/net primitives |
+| **Emscripten** | `wasm32-unknown-emscripten` | Node.js (portable-std) or browser with MEMFS (full) | two distinct seams — see below |
 
-`wasm32-unknown-emscripten` is a fourth option (Node.js, emulated POSIX) but is lower
-priority than the three above. Ubuntu x64 is the primary OS compile and runtime
-verification target for all wasm outputs.
+Ubuntu x64 is the primary OS compile and runtime verification target for all wasm outputs.
+
+### Emscripten Seam: Portable Std vs Full
+
+`wasm32-unknown-emscripten` has two meaningfully different operating modes:
+
+| Mode | Emscripten config | What it provides | Relation to other strata |
+|------|------------------|-----------------|--------------------------|
+| **Portable std** | minimal (`-sSTRICT` / no POSIX APIs) | `std::` shim (libc++); no filesystem, no POSIX | Sits between Compute and Browser — useful as a portability check: code that compiles here with no OS I/O deps is a short step from `wasm32-unknown-unknown` |
+| **Full** | default (MEMFS + POSIX emulation) | emulated filesystem, POSIX stubs, Node.js integration | Closer to OS-like; highest emscripten overhead; deriving from WASI path is preferred |
+
+The **portable std seam** is the important one for LARQL: it exposes whether a crate truly has
+no OS I/O hidden behind `std::` types (e.g. `std::fs`, `std::net`), making it a compile-time
+check that the Compute or Browser stratum is reachable. If a crate compiles to portable-std
+emscripten without filesystem stubs, moving it to `wasm32-unknown-unknown` (add JS glue) or
+`wasm32v1-none` (strip std) becomes mechanical.
+
+**Full emscripten** (MEMFS + POSIX stubs) is lower priority: it papers over OS I/O rather than
+eliminating it, making crates appear more portable than they are. Prefer the WASI path
+(`wasm32-wasip1` + wasmer) where OS I/O is genuinely required — that path is explicit about
+what OS primitives it uses.
 
 The goal is to push each LARQL crate to the **most restrictive stratum** it can inhabit,
 making the partition explicit:
@@ -99,7 +118,8 @@ introduces the `lib.rs` boundary that wasm targets need.
 | Compute | `wasm32v1-none` | any wasm host; wasmi preferred | `cargo test --target wasm32-unknown-unknown` with wasmi runner |
 | Browser | `wasm32-unknown-unknown` | Firefox (prod), Playwright (CI) | Playwright + wasm-pack test |
 | OS-like | `wasm32-wasip1` | wasmer (preferred); wasmtime + pulley (no-Cranelift hosts) | `wasmer run larql.wasm -- infer ...` |
-| Emscripten | `wasm32-unknown-emscripten` | Node.js | lower priority; derive from WASI path |
+| Emscripten (portable std) | `wasm32-unknown-emscripten` | Node.js, minimal config | portability diagnostic: does lib.rs compile without filesystem stubs? |
+| Emscripten (full) | `wasm32-unknown-emscripten` | Node.js or browser + MEMFS | lower priority; papers over OS I/O; prefer WASI path |
 
 Ubuntu x64 is the **primary OS compile and CI verification target** for all strata.
 macOS (Apple Silicon) is the primary native Metal target per the canonical ROADMAP.
