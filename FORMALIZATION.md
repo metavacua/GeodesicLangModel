@@ -28,6 +28,11 @@ Reduction of `MATHEMATICAL_FOUNDATIONS.md` to implementation mappings.
 | ∞-morphism / swarm routing | goose coordinator querying N specialist vindexes via MCP | `crates/goose-mcp/` |
 | `VindexStorage` (pullback seam for ∞-cat) | `StorageBackend` trait (mmap / in-memory / GPU-resident) | `larql-vindex/src/format/storage.rs` |
 | CategoricalReasoner morphisms (LM/LK/LJ) | Java proof-tree algorithms = reference spec for LQL INFER | `reasoning/src/` |
+| No-Contraction / No-Cloning (Girard 1987; Zizzi quant-ph/0611119) | Irreversibility of `larql compile` (non-unitary; information-lossy dimensional reduction) | `compile_cmd/` |
+| Liar metatheorem / Zizzi entanglement `@` (non-idempotent) | Self-referential autoresearch loop: non-convergence (babelian) and paraconsistent convergence (non-babelian) are both metatheorems | `agents/autoresearch/` |
+| Alexandroff compactification `V* = V ∪ {∞}` | Ideal fixed point: `∞` = fully-consistent oracle (H6; unreachable in V) and limit of contradiction profile (non-babelian; reachable) | DISCOVERIES.md |
+| Babelian language (consistent, Tarski-hierarchical, plural) | Non-homoiconic API layers: Tabby → LQL → vindex (strict semantic ordering; decider at each boundary) | `agents/stack.md` |
+| Non-babelian language (paraconsistent, singular, homoiconic) | Autoresearch loop: codebase (object language) = specialist LM (metalanguage); AMBIGUOUS edges = tolerated contradictions | `agents/autoresearch/` |
 
 ## Key Pipeline Equations
 

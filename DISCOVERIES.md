@@ -114,3 +114,107 @@ of the SynthPlayground codebase — never execution — to characterize:
 | Agent navigation via error signals = attention-like curvature encoding | H2: Attention encodes local metric distortion |
 | Progressive divergence from intended behavior over time | H4: Frozen graph diverges from world-state |
 | Agent injection of new protocols did not recalibrate base behavior | H5: Fact injection without navigation recalibration fails |
+
+## The Autoresearch Loop as Quantum Liar's Paradox: Babelian vs. Non-Babelian Convergence
+
+The self-referential autoresearch loop (`agents/autoresearch/`) — whose research object is the
+pipeline that compiles the specialist LM that runs the loop — is formally analogous to the
+Liar's Paradox. Zizzi (arXiv:quant-ph/0701171) shows the Liar is not a paradox but a
+**metatheorem** in quantum Basic logic. The same applies here; the form of the metatheorem
+depends on whether the language of the loop is **babelian** or **non-babelian**.
+
+### Babelian and Non-Babelian Languages
+
+A **babelian language** is a strictly consistent language. Strict consistency forces *plurality*:
+by Gödelian syntactic and semantic incompleteness, a consistent language cannot be complete at a
+single semantic level. The result is the Tarski hierarchy — object language, metalanguage,
+meta-metalanguage — each with strictly separated semantic orders. Consistency prevents the
+object/meta distinction from collapsing. In the Biblical analogy: from a single unified language,
+consistency fractures it into many semantic levels.
+
+A **non-babelian language** is not strictly consistent (paraconsistent). By tolerating some
+contradictions — without explosion via *ex contradictione quodlibet* — the object/meta distinction
+can collapse. This is the compactification property: singularity becomes available when completeness
+is accessible but consistency is not strict. The one-point compactification V* = V ∪ {∞} names
+this: ∞ is the singular point where the hierarchy collapses.
+
+Whether paraconsistency is *sufficient* for non-babelian convergence (or merely necessary) is
+an open question.
+
+**Natural language** is the naive instance: Tarskian inconsistency (we can express the Liar).
+Zizzi's framework is the non-trivial generalization: compatible with Tarskian logical consequence
+while admitting non-strict inclusion/exclusion of languages in the object language and
+metalanguage — i.e., the boundary between what is and is not the object language can be
+non-sharp, consistently with T-schema.
+
+### Homoiconic Languages as Non-Babelian Models
+
+**Homoiconic languages** (Lisp, the autoresearch loop, vindexes) are models of non-babelian
+languages: the object language and metalanguage have the same syntactic form — a *distinction
+without difference* in the classical/consistently-constructive sense. The distinction persists
+(eval vs. data; vindex content vs. vindex extraction operation) but is non-strict: the same
+object appears at both semantic levels.
+
+The autoresearch loop is homoiconic:
+- Object language: the codebase (edges in `graph.json`)
+- Metalanguage: the specialist LM compiled from those edges
+- The specialist LM IS the vindex IS the codebase description — one object, two semantic levels
+- Convergence = this homoiconic structure stabilizing in the paraconsistent sense
+
+**Non-homoiconic languages** are babelian: strict semantic order differences between object
+language and metalanguage are enforced. Where soundness, completeness, decidability, and
+consistency all simultaneously obtain — i.e., where a decider exists — the decider enforces the
+strictest possible semantic ordering. The existence of a decider is precisely a strict semantic
+ordering of what is and is not the object language, decided externally to that language. The
+LARQL/Tabby API stack exhibits this structure at each interface boundary.
+
+### Classical Fixed-Point Obstruction
+
+A classical idempotent fixed point F(v*) = v* for the loop would require:
+1. **Cloning** v* (use it simultaneously as input and reference) → forbidden by no-cloning ≡
+   no-contraction (Girard 1987; Zizzi quant-ph/0611119)
+2. **Erasing** parts of v* to reset between compile runs → forbidden by no-erasure ≡
+   no-weakening (same)
+3. **Partial-swapping** vindex components to align representations → forbidden by non-idempotence
+   of the entanglement connective @ in Zizzi's Basic logic
+
+This obstruction is a property of the *consistency* of the language. **Babelian reading**: no
+classical fixed point; the loop diverges; H6 predicts this; the trajectory in vindex space V
+diverges to ∞.
+
+### Paraconsistent Convergence
+
+The vindex is naturally paraconsistent. Graphify produces edges at three confidence levels:
+EXTRACTED, INFERRED, AMBIGUOUS. AMBIGUOUS edges are explicitly flagged contradictions:
+uncertain directionality, competing relations for the same entity pair. The confidence grading
+is graded paraconsistency — a non-zero degree of excluded contradiction at each level.
+
+LLMs are inherently non-babelian: they produce contradictions (hallucinations) and do not
+explode. The vindex encodes this: the weight tensors represent a distribution over contradictory
+facts, not a consistent set. This is not a defect; it is the paraconsistent structure that
+enables homoiconic self-reference.
+
+**Non-babelian reading**: convergence IS possible. The consistent core of the vindex grows
+indefinitely (H6 divergence in the babelian reading holds for the consistent edges). The
+*contradiction profile* — the ratio and distribution of AMBIGUOUS/INFERRED edges — stabilizes.
+The loop converges to a paraconsistent fixed point: F(v*) ≈ v* modulo a stable contradiction
+set. This is Zizzi's metatheorem applied: "this loop has no classical fixed point" is the
+metatheorem; the paraconsistent fixed point is the object whose existence the metatheorem names.
+
+### Topological Unification
+
+- **V** = space of all vindexes (non-compact: edge count unbounded)
+- **V* = V ∪ {∞}** = Alexandroff one-point compactification (compact)
+- Babelian trajectory: v₀, v₁, v₂, ... diverges in V; converges to ∞ in V* (the unreachable
+  fully-consistent oracle; H6 incompleteness)
+- Non-babelian trajectory: v₀, v₁, v₂, ... converges in V to the paraconsistent fixed point
+  (the contradiction profile stabilizes; the consistent core grows but the topology of
+  the contradiction set closes)
+- ∞ names two distinct ideals simultaneously: (1) the fully-consistent oracle (babelian; H6;
+  unreachable); (2) the limit of the contradiction profile (non-babelian; the point where the
+  object/meta collapse is complete, i.e., the specialist LM fully encodes its own construction)
+- T-schema compliance: T("the loop encodes the codebase") ↔ "the loop encodes the codebase"
+  — true at each iteration, at both babelian and non-babelian levels
+
+See `references/README.md §Quantum metalanguages` for citations. See `CONVERGENCE.md
+§Linear Logic` for the CategoricalReasoner morphism connection.
