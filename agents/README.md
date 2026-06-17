@@ -11,7 +11,7 @@ the layer that turns LARQL vindexes into operating coding agents.
 ## The Swarm Categories Vision
 
 A traditional coding assistant uses a single large general-purpose LM. The GCF/LARQL approach
-produces a **category-theoretical swarm** (*swarm categories*) of specialist LMs:
+produces ***swarm categories*** (a category-theoretical swarm of specialist LMs):
 
 1. Each specialist LM is compiled JIT from a domain-specific knowledge graph (Wikimedia dump,
    domain ontology, code repository) — each is a vindex = categorical object

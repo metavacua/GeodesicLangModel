@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 # GeodesicLangModel Roadmap
 
 Strategic roadmap for the GCF research program and its production goal:
-**category-theoretical swarm language models** (*swarm categories*).
+***swarm categories*** (category-theoretical swarm language models).
 
 This document points to the canonical roadmaps for each subsystem.
 

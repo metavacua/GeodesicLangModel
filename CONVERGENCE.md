@@ -74,8 +74,8 @@ H6 (Operational Incompleteness) is the statement that no finite token-observatio
 
 ## Swarm Categories
 
-The production vision unifies these threads: **category-theoretical swarm language models**
-(shorthand: *swarm categories*) are ensembles of specialist LMs where each member is a
+The production vision unifies these threads: ***swarm categories*** (category-theoretical
+swarm language models) are ensembles of specialist LMs where each member is a
 categorical object (vindex), coordination between members is a natural transformation
 (attention-weight morphism across vindexes), and the routing function from user task to
 specialist is a functor.
