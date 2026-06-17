@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # GeodesicLangModel
 
-Architectural hub for the **Geometric Coherence Framework (GCF)** research program and its production goal: **swarm language models** — specialist LMs compiled just-in-time from graph databases, operating as a coordinated ensemble of coding agents.
+Architectural hub for the **Geometric Coherence Framework (GCF)** research program and its production goal: **category-theoretical swarm language models** (or *swarm categories*) — specialist LMs compiled just-in-time from graph databases, operating as a coordinated ensemble of coding agents whose morphisms are formally tractable.
 
 ## The Core Pipeline
 
@@ -21,7 +21,7 @@ decompile/query   compile/synthesize
         ↘         ↙
   specialist LM  (JIT, on-demand)
         ↓
-  coding agent swarm  (goose fork + tabby fork)
+  swarm categories  (goose fork + tabby fork; each LM = categorical object)
         ↓  orientation layer
   open-deep-research + SPARQL/GraphQL/SQL synthesis
         ↑  (refinement loop)

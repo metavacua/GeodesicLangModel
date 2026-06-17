@@ -964,6 +964,20 @@ dropped. Re-open only if a specific *experiment* needs concurrent decode
 
 ---
 
+## Portability track (fork roadmap)
+
+See [`docs/roadmap/webgpu-wasm-portability.md`](docs/roadmap/webgpu-wasm-portability.md)
+for the wasm32-unknown-unknown + wgpu/WebGPU portability roadmap maintained in the
+`metavacua/GeodesicLangModel` fork.
+
+This is a **separate portability track** — additive to the GPU track and CPU track above.
+It does not alter the two-track philosophy or the "no GPU-only paths in core" constraint
+(C11). The compute-pure tier (`model-compute --features wasm`, `larql-core --no-default-features
+--features msgpack`) already satisfies `wasm32-unknown-unknown`; the portability track makes
+the build gate explicit and extends outward from there.
+
+---
+
 ## Loose ends (shipped features with open follow-ups)
 
 | Item | Crate | Detail |

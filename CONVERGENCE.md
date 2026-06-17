@@ -71,3 +71,17 @@ This is the same morphism that the GeodesicLangModel dual-license scheme uses, a
 - `INSERT/DELETE` patches = proof edits (axiom additions/removals)
 
 H6 (Operational Incompleteness) is the statement that no finite token-observation sequence can decide all propositions about an LLM's knowledge — i.e., the proof system is incomplete in the Gödelian sense.
+
+## Swarm Categories
+
+The production vision unifies these threads: **category-theoretical swarm language models**
+(shorthand: *swarm categories*) are ensembles of specialist LMs where each member is a
+categorical object (vindex), coordination between members is a natural transformation
+(attention-weight morphism across vindexes), and the routing function from user task to
+specialist is a functor.
+
+CategoricalReasoner provides the formal semantics of this structure (morphism composition,
+functor existence = reasoning path validity). LARQL provides the runtime objects (vindexes
+and LQL operations). The swarm is not a metaphor — it is a small category whose objects are
+vindexes and whose morphisms are trainable transformations between them, formally verifiable
+by the same KeY theorem prover and Curry-Howard machinery described above.

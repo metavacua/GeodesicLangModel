@@ -124,6 +124,51 @@ larql build --vindex ./vindexes/specialist --format mlc --output ./dist/speciali
 
 This enables fully client-side swarm LM operation for privacy-sensitive tasks.
 
+## GraphQL-for-GitHub Adapter (Priority Integration)
+
+The highest-priority near-term integration for the **codebase-as-LM** milestone:
+a GraphQL-for-GitHub adapter that bridges GitHub's GraphQL API to the LARQL pipeline.
+
+```
+GitHub GraphQL API
+    → adapter (seaography / async-graphql bridge)
+    → RDF/graph representation (Oxigraph or LQL)
+    → larql extract-index
+    → vindex (the repo-as-LM)
+```
+
+This implements the core thesis in one concrete step: any GitHub repository becomes a
+queryable knowledge graph, compiled to a vindex, serving as a specialist LM for the
+agent operating on that repository. The graphify fork (`metavacua/graphify`) is a
+candidate implementation of this same distillation step.
+
+## mlc-llm — GPU Coverage Adapter
+
+`metavacua/mlc-llm` (fork) serves as the **GPU-coverage adapter** in the stack:
+
+```sh
+# Compile vindex to MLC format for GPU-accelerated inference
+larql build --vindex ./vindexes/specialist --format mlc --output ./dist/specialist-mlc
+
+# mlc-llm loads and serves the compiled model on any supported GPU
+```
+
+mlc-llm/TVM provides the widest GPU coverage across Metal, CUDA, ROCm, and Vulkan —
+making it the adapter that unlocks the full GPU matrix for compiled specialist LMs,
+without LARQL itself needing to implement all GPU backends.
+
+## web-llm — Browser Front-End
+
+`metavacua/web-llm` (fork) is the **browser-side deployment front-end**:
+
+```sh
+# Deploy specialist LM (MLC-compiled) to browser via web-llm
+# No server-side inference required; privacy-preserving for local corpora
+```
+
+web-llm consumes mlc-compiled models, runs them in WebGPU/WebAssembly, and exposes
+an OpenAI-compatible API from inside the browser. The swarm runs client-side.
+
 ## Query Synthesis Summary
 
 The four synthesis surfaces work together:
@@ -132,7 +177,7 @@ The four synthesis surfaces work together:
 |---------|-----------|------|
 | SPARQL | Oxigraph | Knowledge graph queries (Wikimedia, domain ontologies) |
 | LQL | larql-lql crate | Vindex queries and mutations |
-| GraphQL | seaography / async-graphql | API layer over vindex data for web UIs |
+| GraphQL | seaography / async-graphql + GitHub adapter | Codebase-as-LM (priority); API layer over vindex data for web UIs |
 | SQL | (future) SeaORM via seaography | Relational views over vindex metadata |
 
 Combined, these four surfaces allow the construction of specialist LMs from any

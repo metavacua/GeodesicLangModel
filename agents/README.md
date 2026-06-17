@@ -8,16 +8,17 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 This directory documents the architecture for the **Cluster 3 coding agent harness** —
 the layer that turns LARQL vindexes into operating coding agents.
 
-## The Swarm Language Model Vision
+## The Swarm Categories Vision
 
 A traditional coding assistant uses a single large general-purpose LM. The GCF/LARQL approach
-produces a **swarm** of specialist LMs:
+produces a **category-theoretical swarm** (*swarm categories*) of specialist LMs:
 
 1. Each specialist LM is compiled JIT from a domain-specific knowledge graph (Wikimedia dump,
-   domain ontology, code repository)
-2. A coordinator (goose fork) routes tasks to the most relevant specialist
+   domain ontology, code repository) — each is a vindex = categorical object
+2. A coordinator (goose fork) routes tasks to the most relevant specialist; routing = functor
 3. Each specialist operates on the repo/data it was compiled from, using its own vindex
-4. The open-deep-research orientation layer provides context for routing and for JIT compilation
+4. Compiled specialists deploy to browser via web-llm (WebLLM front-end) or to server via mlc-llm (GPU adapter)
+5. The open-deep-research orientation layer provides context for routing and for JIT compilation
 
 ```
 User task
@@ -49,14 +50,16 @@ Fork of AAIF/goose. The integration adds LARQL as an MCP extension:
 - goose recipes (YAML) can orchestrate multi-step vindex operations
 - The goose extension delegates to the `larql` binary or `larql-server` HTTP API
 
-### tabby fork (`metavacua/tabby`)
+### tabby fork (`metavacua/tabby`) — **primary near-term coding harness**
 
-Fork of TabbyML/tabby. The integration replaces the retrieval backend with LARQL:
+Fork of TabbyML/tabby. Tabby is the tentatively-selected near-term coding harness for
+the LARQL pipeline. The integration replaces the retrieval backend with LARQL:
 
 - Instead of traditional RAG (BM25/embedding retrieval), tabby queries the LQL REPL
 - `WALK FROM <symbol>` provides graph-structured context for completions
 - `TRACE <token_sequence>` provides attention-path context
 - This tests H5 (RAG navigation failure) in a live coding context
+- Self-hosted; vindex-backed completions avoid cloud dependency
 
 ### open-deep-research (`metavacua/open-deep-research-jules-btahir`)
 

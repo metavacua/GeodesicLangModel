@@ -1,4 +1,4 @@
-.PHONY: build release test test-fast test-full test-integration test-models check clean fmt lint demos bench bench-core bench-inference bench-compute bench-wire bench-routing bench-grid bench-all bench-vindex bench-vindex-scaling bench-save bench-check coverage coverage-summary larql-core-ci larql-core-test larql-core-fmt-check larql-core-lint larql-core-feature-test larql-core-bench-test larql-core-bench larql-core-examples larql-core-coverage larql-core-coverage-html larql-models-ci larql-models-test larql-models-fmt-check larql-models-lint larql-models-coverage-summary larql-models-bench-test larql-vindex-ci larql-vindex-test larql-vindex-fmt-check larql-vindex-lint larql-vindex-examples larql-vindex-bench-test larql-vindex-bench larql-vindex-coverage larql-vindex-coverage-summary larql-vindex-coverage-html larql-vindex-coverage-policy larql-compute-test larql-compute-test-fast larql-compute-test-integration larql-compute-check-fast larql-compute-check-tests larql-compute-check-all larql-compute-test-metal-decode larql-compute-test-metal-lib larql-compute-fmt-check larql-compute-lint larql-compute-coverage larql-compute-coverage-summary larql-compute-coverage-html larql-compute-coverage-policy larql-compute-ci larql-boundary-ci larql-boundary-test larql-boundary-fmt-check larql-boundary-lint larql-boundary-bench-test larql-boundary-examples larql-kv-ci larql-kv-test larql-kv-fmt-check larql-kv-lint larql-kv-examples larql-kv-bench-test larql-kv-bench larql-kv-coverage larql-kv-coverage-summary larql-kv-coverage-html larql-kv-coverage-policy larql-server-ci larql-server-test larql-server-fmt-check larql-server-lint larql-server-coverage larql-server-coverage-summary larql-server-coverage-html larql-server-coverage-policy larql-lql-ci larql-lql-test larql-lql-fmt-check larql-lql-lint larql-lql-examples larql-lql-bench-test larql-lql-coverage-summary larql-cli-ci larql-cli-test larql-cli-fmt-check larql-cli-lint larql-cli-coverage-summary larql-inference-ci larql-inference-test larql-inference-fmt-check larql-inference-lint larql-inference-bench-test larql-inference-coverage-summary
+.PHONY: build release test test-fast test-full test-integration test-models check clean fmt lint demos bench bench-core bench-inference bench-compute bench-wire bench-routing bench-grid bench-all bench-vindex bench-vindex-scaling bench-save bench-check coverage coverage-summary larql-core-ci larql-core-test larql-core-fmt-check larql-core-lint larql-core-feature-test larql-core-bench-test larql-core-bench larql-core-examples larql-core-coverage larql-core-coverage-html larql-models-ci larql-models-test larql-models-fmt-check larql-models-lint larql-models-coverage-summary larql-models-bench-test larql-vindex-ci larql-vindex-test larql-vindex-fmt-check larql-vindex-lint larql-vindex-examples larql-vindex-bench-test larql-vindex-bench larql-vindex-coverage larql-vindex-coverage-summary larql-vindex-coverage-html larql-vindex-coverage-policy larql-compute-test larql-compute-test-fast larql-compute-test-integration larql-compute-check-fast larql-compute-check-tests larql-compute-check-all larql-compute-test-metal-decode larql-compute-test-metal-lib larql-compute-fmt-check larql-compute-lint larql-compute-coverage larql-compute-coverage-summary larql-compute-coverage-html larql-compute-coverage-policy larql-compute-ci larql-boundary-ci larql-boundary-test larql-boundary-fmt-check larql-boundary-lint larql-boundary-bench-test larql-boundary-examples larql-kv-ci larql-kv-test larql-kv-fmt-check larql-kv-lint larql-kv-examples larql-kv-bench-test larql-kv-bench larql-kv-coverage larql-kv-coverage-summary larql-kv-coverage-html larql-kv-coverage-policy larql-server-ci larql-server-test larql-server-fmt-check larql-server-lint larql-server-coverage larql-server-coverage-summary larql-server-coverage-html larql-server-coverage-policy larql-lql-ci larql-lql-test larql-lql-fmt-check larql-lql-lint larql-lql-examples larql-lql-bench-test larql-lql-coverage-summary larql-cli-ci larql-cli-test larql-cli-fmt-check larql-cli-lint larql-cli-coverage-summary larql-inference-ci larql-inference-test larql-inference-fmt-check larql-inference-lint larql-inference-bench-test larql-inference-coverage-summary wasm32-compute-tier-build
 
 # Build
 build:
@@ -76,6 +76,21 @@ larql-core-coverage-html:
 	@echo "Report: coverage/larql-core/html/index.html"
 
 larql-core-ci: larql-core-fmt-check larql-core-lint larql-core-test larql-core-feature-test larql-core-bench-test larql-core-examples
+
+# wasm32 portability track — compute-pure tier (W1)
+#
+# Verifies that the compute-pure crates compile to wasm32-unknown-unknown.
+# Requires: rustup target add wasm32-unknown-unknown
+# Ubuntu x64 is the primary compile verification target.
+#
+# Strata:
+#   model-compute --features wasm  → Compute stratum (wasmi, pure Rust, wasm32v1-none-safe)
+#   larql-core (no http, msgpack)  → Compute stratum (serde/thiserror only)
+#
+# See docs/roadmap/webgpu-wasm-portability.md for the full portability track.
+wasm32-compute-tier-build:
+	cargo build -p model-compute --no-default-features --features wasm --target wasm32-unknown-unknown
+	cargo build -p larql-core --no-default-features --features msgpack --target wasm32-unknown-unknown
 
 larql-models-test:
 	cargo test -p larql-models

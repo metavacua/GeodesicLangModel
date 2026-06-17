@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Research Stack
 
-Full map of the GeodesicLangModel research constellation.
+Full map of the GeodesicLangModel research constellation — organized around the production goal of **category-theoretical swarm language models** (*swarm categories*): ensembles of specialist LMs compiled JIT from graph databases, where each LM is a categorical object (vindex) and coordination between members is a formally tractable morphism.
 
 ## Architecture Overview
 

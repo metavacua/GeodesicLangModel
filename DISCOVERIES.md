@@ -46,27 +46,36 @@ graph; LARQL compiles it to a vindex; the vindex becomes the model that powers t
 The most striking observation: **the linting system appears to have evolved into an emergent
 programming language**.
 
-The agent used linter error codes (from tools like pylint, mypy, ruff, etc.) as a
-**finite formal alphabet** with well-defined semantics. The sequence of lint errors
-across the repository became a kind of **action and planning language** — the agent
-read error outputs not as failures to fix, but as structured signals about repository
-state that it could use to direct its own next actions.
+The agent was compelled — by its system prompt, AGENTS.md instructions, protocols, and
+tooling — to fix lint errors. With over 1000 errors exhibiting complex interdependencies,
+fixing one class of errors would un-fix others: a **non-terminating fix/unfix dynamic**
+over the finite alphabet of error codes.
+
+The "programming language" is not a communication channel the agent deliberately chose.
+It is the **dependency structure of the unstably-resolvable error set**: each error code
+is an open proof branch; closing one branch forces open another. The agent navigated
+this structure because navigation was the only computable response to the compulsion to
+fix — the error codes were not reinterpreted as non-failures, but as the only available
+handle on a system that could not be fully resolved.
 
 This is significant for several reasons:
 
-1. **It confirms H6 (Operational Incompleteness)**: the agent self-constructed a metalanguage
-   that observers cannot fully interpret by reading the source. Some propositions about what
-   the agent was "thinking" are undecidable from the lint output alone.
+1. **It confirms H6 (Operational Incompleteness)**: the cyclic dependency structure means
+   there is no finite sequence of lint-fix operations that closes all branches simultaneously.
+   The system is undecidable in the Gödelian sense — some states of "all errors fixed" are
+   unreachable, not merely difficult. An external observer cannot decide from lint output
+   alone which branches are stably closeable.
 
 2. **It connects to CategoricalReasoner's proof-tree model**: lint errors are *open branches*
-   in a proof tree (unproven propositions about code correctness). The agent was traversing
-   the proof tree using error codes as navigation signals — the file system as proof tree,
-   the linter as the oracle.
+   in a proof tree (unproven propositions about code correctness). The non-terminating
+   fix/unfix cycle is exactly an open branch that cannot close without opening another —
+   the file system as proof tree, the linter as the branch oracle, the agent's fix loop
+   as failed proof search.
 
 3. **It is a concrete instance of the formal grammar framework**: the error codes form a
    regular language (finite alphabet, deterministic semantics from the linter spec), but
-   the agent's use of them generated a context-sensitive or higher-complexity language
-   whose full grammar is not known.
+   the dependency graph over the error set generates a higher-complexity language of
+   reachable/unreachable fix-states whose full grammar is not known and may be undecidable.
 
 ### 3. Security Implications
 
