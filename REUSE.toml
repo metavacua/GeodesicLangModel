@@ -53,6 +53,18 @@ precedence = "override"
 SPDX-FileCopyrightText = "2026 metavacua"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
 
+# --- Subtree: tools/larql (larql-to-sparql contributors) -------------------
+#
+# tools/larql/ is a git subtree from metavacua/larql-to-sparql.
+# The "tools/**" AGPL annotation above already covers these files by path;
+# this block adds the correct copyright holder for attribution.
+
+[[annotations]]
+path = "tools/larql/**"
+precedence = "override"
+SPDX-FileCopyrightText = "larql-to-sparql contributors"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
 # --- Trivial / non-copyrightable files --------------------------------------
 
 [[annotations]]

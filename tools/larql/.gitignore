@@ -1,0 +1,58 @@
+# Rust
+target/
+coverage/
+**/*.rs.bk
+.cargo/
+
+# Python / maturin
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.so
+*.dylib
+*.egg-info/
+dist/
+build/
+*.whl
+# Don't ignore Rust source modules named `build/`
+!crates/*/src/**/build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+.claude/
+
+# Checkpoints / temp
+*.checkpoint
+
+# Weights and binary model files — never commit these
+*.npz
+*.npy
+*.safetensors
+*.gguf
+*.ggml
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.pkl
+*.h5
+*.hdf5
+*.vindex
+
+# Nix
+result
+result-*
+
+# output
+output/
+data/
+experiments/
+vindexes/
+.pids/
+docs/replay/

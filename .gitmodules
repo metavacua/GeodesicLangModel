@@ -1,0 +1,9 @@
+[submodule "theory"]
+	path = theory
+	url = http://local_proxy@127.0.0.1:45629/git/metavacua/Theory
+[submodule "reasoning"]
+	path = reasoning
+	url = http://local_proxy@127.0.0.1:45629/git/metavacua/CategoricalReasoner
+[submodule "ontology/subclass"]
+	path = ontology/subclass
+	url = http://local_proxy@127.0.0.1:45629/git/metavacua/subclass

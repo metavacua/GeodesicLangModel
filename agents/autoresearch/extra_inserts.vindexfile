@@ -1,0 +1,71 @@
+# SPDX-FileCopyrightText: 2026 metavacua
+# SPDX-License-Identifier: CC-BY-SA-4.0
+#
+# Agent-editable extra INSERT statements for the self-referential autoresearch loop.
+#
+# These supplement what graphify extracts via tree-sitter AST analysis.
+# graphify captures code-level structure (imports, calls, class hierarchies).
+# This file captures conceptual structure: the math↔code mappings from
+# FORMALIZATION.md that no AST pass can infer.
+#
+# The autoresearch agent should ADD to this file when it identifies high-value
+# relationships that graphify cannot see. Each INSERT adds one triple to the
+# vindex, encoding more of the codebase's categorical structure into the LM.
+#
+# Format: INSERT ("subject", "relation", "object")
+# Blank lines and lines beginning with # are ignored by run_experiment.sh.
+
+# ── Kähler triple (vindex = (M, g) with J, ω, g) ────────────────────────────
+INSERT ("vindex", "implements", "Riemannian manifold")
+INSERT ("gate_vectors", "corresponds_to", "symplectic form ω")
+INSERT ("attn_weights", "corresponds_to", "Riemannian metric g")
+INSERT ("FFN weights", "corresponds_to", "complex structure J")
+INSERT ("down_meta", "corresponds_to", "sheaf sections 𝒪_X")
+INSERT ("VectorIndex", "is_a", "Kähler triple")
+
+# ── Graph Laplacian → Laplace-Beltrami convergence ───────────────────────────
+INSERT ("graph.json", "is_a", "discrete sample G_ε of manifold M")
+INSERT ("larql build", "computes", "graph Laplacian L_ε")
+INSERT ("larql compile", "realizes", "Laplace-Beltrami operator Δ_M")
+INSERT ("sample density", "controls", "L_ε → Δ_M convergence")
+
+# ── Sheaf structure ───────────────────────────────────────────────────────────
+INSERT ("FeatureMeta", "is_a", "local sheaf section")
+INSERT ("down_meta.bin", "encodes", "sheaf 𝒪_X")
+INSERT ("LQL SELECT", "computes", "global section H⁰")
+INSERT ("INFER edges", "represents", "obstruction class H¹")
+
+# ── Categorical morphisms ─────────────────────────────────────────────────────
+INSERT ("W_Q", "is_a", "categorical morphism")
+INSERT ("W_K", "is_a", "categorical morphism")
+INSERT ("W_V", "is_a", "categorical morphism")
+INSERT ("W_O", "is_a", "categorical morphism")
+INSERT ("layer stack", "implements", "functor composition")
+INSERT ("LQL WALK", "implements", "functor F: Diff → Ab")
+INSERT ("LQL DESCRIBE", "implements", "natural transformation")
+INSERT ("goose-mcp", "implements", "∞-morphism routing")
+INSERT ("VindexStorage", "is_a", "pullback seam for ∞-category")
+
+# ── Gauss-Bonnet / topology ───────────────────────────────────────────────────
+INSERT ("larql dev circuit-discover", "computes", "Gauss-Bonnet ∫κ dA")
+INSERT ("euler_chi", "equals", "V − E + communities")
+INSERT ("euler_chi", "relates_to", "χ(M) in Gauss-Bonnet")
+INSERT ("specialist vindex", "is_a", "branched covering sheet")
+INSERT ("FROM base-vindex", "implements", "branched covering")
+
+# ── Pipeline topology ─────────────────────────────────────────────────────────
+INSERT ("graphify update", "distils", "codebase")
+INSERT ("adapter", "converts", "graph.json to Vindexfile")
+INSERT ("larql build", "embeds", "graph Laplacian into vindex")
+INSERT ("larql compile", "bakes", "Δ_M into safetensors weights")
+INSERT ("autoresearch loop", "is_a", "fixed-point iteration in vindex category")
+INSERT ("autoresearch loop", "subject_is", "itself")
+
+# ── Swarm categories ──────────────────────────────────────────────────────────
+INSERT ("swarm categories", "is_a", "category-theoretic swarm of specialist LMs")
+INSERT ("specialist LM", "compiled_from", "domain knowledge graph")
+INSERT ("routing layer", "implements", "functor over vindex embeddings")
+INSERT ("CategoricalReasoner", "is_a", "reference specification for LQL INFER")
+INSERT ("LM morphism", "instantiates_in", "LQL INFER operation")
+INSERT ("LK morphism", "instantiates_in", "LQL INFER operation")
+INSERT ("LJ morphism", "instantiates_in", "LQL INFER operation")

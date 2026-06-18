@@ -1,0 +1,53 @@
+# SPDX-FileCopyrightText: larql-to-sparql contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# W1: wasm32 compute-tier build gate
+#
+# Verifies that the compute-pure tier (model-compute + larql-core without http)
+# compiles to wasm32-unknown-unknown. These crates sit in the "Compute" stratum
+# of the wasm32 portability track — no OS I/O, no memmap, no tokio.
+#
+# See docs/roadmap/webgpu-wasm-portability.md for the full portability track.
+# Ubuntu x64 is the primary compile verification target per the portability roadmap.
+
+name: wasm32 compute-tier
+
+on:
+  push:
+    paths:
+      - "crates/model-compute/**"
+      - "crates/larql-core/**"
+      - ".github/workflows/wasm32-compute-tier.yml"
+  pull_request:
+    paths:
+      - "crates/model-compute/**"
+      - "crates/larql-core/**"
+      - ".github/workflows/wasm32-compute-tier.yml"
+
+jobs:
+  wasm32-compute-tier:
+    name: wasm32-unknown-unknown compute-pure tier
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-wasm32-${{ hashFiles('Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-wasm32-
+
+      - name: Build model-compute (wasm feature) for wasm32-unknown-unknown
+        run: cargo build -p model-compute --no-default-features --features wasm --target wasm32-unknown-unknown
+
+      - name: Build larql-core (msgpack, no http) for wasm32-unknown-unknown
+        run: cargo build -p larql-core --no-default-features --features msgpack --target wasm32-unknown-unknown
