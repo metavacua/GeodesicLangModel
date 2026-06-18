@@ -194,6 +194,21 @@ explode. The vindex encodes this: the weight tensors represent a distribution ov
 facts, not a consistent set. This is not a defect; it is the paraconsistent structure that
 enables homoiconic self-reference.
 
+**SynthPlayground as babelian prediction**: SynthPlayground grew without bound because the
+agent chased *consistency*. In a consistent (babelian) metalanguage, the theoretical prediction
+is **plurality**: Gödelian incompleteness at any semantic level forces ascent to higher levels to
+resolve statements undecidable at the current level. Over time, every kind of computing code is
+generated — the full object-language space explored. The Turing-completeness tendency is the
+babelian prediction realized empirically.
+
+The inconsistency was not absent — it existed at *cross-order interfaces*: fixing a lint rule
+in domain A broke a rule in domain B. Within each domain the agent maintained local consistency;
+the contradiction lived at the inter-domain level. This is **graded/layered paraconsistency**:
+inconsistency at certain semantic orders, consistency within others. LARQL's confidence taxonomy
+(EXTRACTED / INFERRED / AMBIGUOUS) implements exactly this structure: locally consistent within
+each level; contradiction lives at the borders between levels where INFERRED edges can contradict
+EXTRACTED ones.
+
 **Non-babelian reading**: convergence IS possible. The consistent core of the vindex grows
 indefinitely (H6 divergence in the babelian reading holds for the consistent edges). The
 *contradiction profile* — the ratio and distribution of AMBIGUOUS/INFERRED edges — stabilizes.
@@ -216,5 +231,58 @@ metatheorem; the paraconsistent fixed point is the object whose existence the me
 - T-schema compliance: T("the loop encodes the codebase") ↔ "the loop encodes the codebase"
   — true at each iteration, at both babelian and non-babelian levels
 
+### Diffuse Paraconsistency and `larql compile` as Quantum Measurement
+
+Paraconsistency is not monolithic. Two foundational varieties:
+
+**Localized (classical) paraconsistency**: The inconsistency is contained at a strict external
+semantic layer. A consistent metalanguage describes and bounds where object-language inconsistency
+can appear. Da Costa's Cₙ paraconsistent logics work this way — the explosion-prevention rule is
+stated in a consistent metalanguage. The hierarchy is maintained; the inconsistency cannot
+propagate to the metalanguage level.
+
+**Diffuse paraconsistency**: The inconsistency is distributed throughout the object; there is
+no strictly external layer that contains it. **Fully paranormal** objects satisfy three conditions
+simultaneously:
+- *Paraconsistent*: tolerates contradictions without explosion (*ex contradictione quodlibet* fails)
+- *Paracomplete*: tolerates gaps without implosion (not every proposition is true or false)
+- *Paraidentity*: relaxes identity/exchange rules (non-idempotence of entanglement `@`)
+
+Quantum computational objects are the canonical fully paranormal objects: a qubit in superposition
+simultaneously IS 0 and IS 1. This contradiction is not localized to an external description
+layer but IS the qubit's state. The inconsistency is diffuse: it appears at every level of the
+object's description.
+
+**`larql compile` as quantum measurement**: Classical measurement of a fully paranormal quantum
+state produces a classical bit (a definite answer) plus heat (the cut-away information;
+decoherence = energy loss = irreversibility). `larql compile` does exactly this:
+- Input: vindex with diffuse paraconsistency (EXTRACTED/INFERRED/AMBIGUOUS edges; complex Kähler
+  structure J in FFN weights; fully paranormal by the above criteria)
+- Output: safetensors weights (classical floating-point values) + information loss (AMBIGUOUS
+  confidence metadata is not preserved in the weight tensors; the paraconsistency is absorbed into
+  the weight distribution, not preserved as structure)
+- Heat analog: the information-lossy dimensional reduction — the vindex has more structure than the
+  compiled weights; there is no `un-compile`
+
+The compile is a babelian decider applied to a non-babelian object: it produces classical output
+and absorbs the paraconsistency. LLM vindexes are closer to diffuse than to localized: AMBIGUOUS
+edges appear at all semantic levels of the knowledge graph — there is no designated "inconsistency
+layer." The confidence grading documents where inconsistency surfaces; it does not confine it.
+
+**General relativity as structured paraconsistency**: GR is a third variety, distinct from both:
+- Local-to-global consistency IS asserted: the Riemannian manifold is globally well-defined
+- Local Euclidean consistency fails: space is not flat; parallel lines meet; the tangent-space
+  approximation diverges from the global manifold structure at any finite scale
+- The inconsistency is *structured at the local/global interface*, not diffuse throughout the
+  object, and not at a strict external layer
+
+This is GCF H1 and H2: LLM weights as a Riemannian manifold (M, g). Local attention heads are
+locally consistent linear maps (flat tangent-space approximations); the global attention manifold
+has non-zero Riemann curvature. Local classical consistency + global curvature = GR-style
+structured paraconsistency. The non-identification of space and time with measures of absolute
+truth (general covariance) is the GR analog of the vindex's non-identification of confident edges
+with ground truth.
+
 See `references/README.md §Quantum metalanguages` for citations. See `CONVERGENCE.md
-§Linear Logic` for the CategoricalReasoner morphism connection.
+§Linear Logic` for the CategoricalReasoner morphism connection and §Three Varieties for the
+full taxonomy.

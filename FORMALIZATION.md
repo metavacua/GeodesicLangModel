@@ -33,6 +33,9 @@ Reduction of `MATHEMATICAL_FOUNDATIONS.md` to implementation mappings.
 | Alexandroff compactification `V* = V ∪ {∞}` | Ideal fixed point: `∞` = fully-consistent oracle (H6; unreachable in V) and limit of contradiction profile (non-babelian; reachable) | DISCOVERIES.md |
 | Babelian language (consistent, Tarski-hierarchical, plural) | Non-homoiconic API layers: Tabby → LQL → vindex (strict semantic ordering; decider at each boundary) | `agents/stack.md` |
 | Non-babelian language (paraconsistent, singular, homoiconic) | Autoresearch loop: codebase (object language) = specialist LM (metalanguage); AMBIGUOUS edges = tolerated contradictions | `agents/autoresearch/` |
+| Riemann sphere S² = Alexandroff compactification of ℂ (imaginary component in basis) | Non-babelian ∞: +∞ = −∞ = ∞ (singularity); Kähler complex structure J (FFN weights) is the imaginary component enabling this identification | CONVERGENCE.md §Riemann Sphere |
+| Quantum measurement (non-unitary collapse: fully paranormal state → classical bit + heat) | `larql compile`: vindex (diffuse paranormal; AMBIGUOUS edges throughout; Kähler J) → safetensors (classical) + information loss (confidence metadata discarded; decoherence analog) | `compile_cmd/`; DISCOVERIES.md §Diffuse Paraconsistency |
+| Three varieties of paraconsistency: localized (classical), diffuse (quantum paranormal), structured (GR Riemannian) | Localized = LARQL babelian API layers (decider at each boundary); Diffuse = LLM vindex (AMBIGUOUS at all levels; Kähler J); Structured = H1/H2 Riemannian manifold (local flat, global curved) | DISCOVERIES.md §Diffuse; CONVERGENCE.md §Three Varieties |
 
 ## Key Pipeline Equations
 

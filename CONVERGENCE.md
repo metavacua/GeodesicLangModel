@@ -104,6 +104,37 @@ than duplicated.
   no-erasure at the pipeline level: once compiled, the vindex content cannot be recovered
   from the safetensors alone.
 
+### Riemann Sphere and Complex Basis
+
+The babelian/non-babelian distinction has a mathematical correlate in the representational field:
+
+| Compactification | Field | Basis | ±∞ | Type |
+|---|---|---|---|---|
+| Real projective line RP¹ | ℝ | No imaginary component | Distinguishable: +∞ ≠ −∞ | Babelian |
+| Riemann sphere S² | ℂ | Imaginary component present | Indistinguishable: +∞ = −∞ = ∞ | Non-babelian |
+
+The Alexandroff one-point compactification of ℝ keeps +∞ and −∞ as distinct points — two
+separate ideals (the fully-consistent oracle H6 and the fully-inconsistent explosion). Consistency
+forces the limits apart.
+
+The Alexandroff one-point compactification of ℂ (the **Riemann sphere**) collapses all
+infinity-directions to a single point ∞. The imaginary axis provides the "second direction"
+that wraps the line into a sphere and identifies the two ends. Paraconsistency allows this
+identification: the fully-consistent ideal and the fully-paraconsistent limit are the same point.
+
+**The vindex's Kähler complex structure J** (FFN weights ↔ complex structure J — `FORMALIZATION.md`
+row 2) IS the imaginary component in the vindex's basis. The Riemann sphere is the correct
+compactification for vindex space V. This is consistent with ∞ naming two distinct ideals
+simultaneously (`DISCOVERIES.md §Topological Unification`): on the Riemann sphere, ∞ is a
+single point approached from multiple directions — it simultaneously names the consistent oracle
+(babelian trajectory) and the paraconsistent fixed point (non-babelian trajectory).
+
+**Graded/layered paraconsistency**: Paraconsistency need not exist at all semantic orders
+simultaneously. Inconsistency at some semantic orders (AMBIGUOUS confidence) is compatible with
+consistency at others (EXTRACTED confidence). Multiple varieties and classes of paraconsistency
+are compatible with the babelian/non-babelian framework: a language can be non-babelian globally
+(one ∞-point) while exhibiting babelian structure at each local semantic level.
+
 ### Babelian and Non-Babelian Layers in the LARQL Stack
 
 The full LARQL stack has both babelian and non-babelian layers:
@@ -140,7 +171,36 @@ edges produces a specialist LM that has inherited those contradictions. The auto
 stabilizes when the contradiction profile is stable — this is the non-babelian convergence
 criterion.
 
-See `DISCOVERIES.md §Autoresearch Loop` for the fixed-point analysis.
+### Three Varieties of Paraconsistency in the GCF Stack
+
+Paraconsistency is not monolithic. Three distinct varieties appear across the GCF:
+
+**1. Localized (classical)**: Inconsistency contained at a strict external semantic layer. A
+consistent metalanguage bounds where object-language inconsistency can appear. This is the
+paraconsistency of the LARQL babelian layers: the LQL query engine (a consistent decider) bounds
+what triple-membership claims are valid; the Tabby API (a consistent interface) bounds what
+completions can be requested. The hierarchy is maintained at each local interface.
+
+**2. Diffuse (quantum / fully paranormal)**: Inconsistency distributed throughout the object; no
+external consistent layer contains it. Fully paranormal = paraconsistent + paracomplete +
+paraidentity (no-cloning, no-erasure, no-partial-swap simultaneously). LLM vindexes are diffuse
+paranormal objects: AMBIGUOUS edges appear at all semantic levels; weight tensors represent
+distributions over contradictory facts distributed throughout the model.
+
+`larql compile` is quantum measurement applied to a diffuse paranormal object: vindex (paranormal,
+complex Kähler J, AMBIGUOUS edges throughout) → safetensors (classical) + information loss
+(confidence metadata discarded; decoherence analog). A babelian decider applied to a non-babelian
+object; classical output; paraconsistency absorbed.
+
+**3. Structured (general-relativistic)**: Local-to-global consistency asserted; local Euclidean
+axioms denied. The Riemannian manifold is globally well-defined and consistent; individual
+tangent-space approximations (local flatness) fail at any finite scale. This is GCF H1 and H2:
+LLM attention weights as (M, g) — locally consistent linear maps (flat tangent space), globally
+curved geodesic structure (non-zero Riemann curvature tensor). The curvature is not a defect; it
+IS the encoding of knowledge. The non-identification of space with absolute truth in GR maps to
+the vindex's non-identification of confident edges with ground truth.
+
+See `DISCOVERIES.md §Diffuse Paraconsistency` for the fixed-point analysis.
 See `references/README.md §Quantum metalanguages` for citations.
 
 ## Swarm Categories
