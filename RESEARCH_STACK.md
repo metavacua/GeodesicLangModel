@@ -63,8 +63,8 @@ Sibling forks for extending/reducing LARQL and realizing the round-trip. Documen
 
 | Repo | GitHub | Role in round-trip |
 |------|--------|-------------------|
-| graphify | [metavacua/graphify](https://github.com/metavacua/graphify) *(planned fork of safishamsi/graphify)* | **Distillation**: GitHub repo → queryable knowledge graph; key step for repo → LARQL vindex → LM |
-| Oxigraph | [metavacua/oxigraph](https://github.com/metavacua/oxigraph) *(planned fork of oxigraph/oxigraph)* | **SPARQL store**: Rust RDF triple store + SPARQL engine; SPARQL synthesis leg; bridge from CategoricalReasoner's SPARQL execution to Rust pipeline |
+| graphify | [metavacua/graphify](https://github.com/metavacua/graphify) *(fork of safishamsi/graphify)* | **Distillation**: GitHub repo → queryable knowledge graph; key step for repo → LARQL vindex → LM |
+| Oxigraph | [metavacua/oxigraph](https://github.com/metavacua/oxigraph) *(fork of oxigraph/oxigraph)* | **SPARQL store**: Rust RDF triple store + SPARQL engine; SPARQL synthesis leg; bridge from CategoricalReasoner's SPARQL execution to Rust pipeline |
 | mlc-llm | [metavacua/mlc-llm](https://github.com/metavacua/mlc-llm) | **Production/Synthesis**: ML compilation engine; compile vindexes → deployable LMs |
 | web-llm | [metavacua/web-llm](https://github.com/metavacua/web-llm) | **Deployment**: in-browser inference; browser-side vindex round-trip experiments |
 | wasmspec | [metavacua/wasmspec](https://github.com/metavacua/wasmspec) | **Compute kernel**: WebAssembly spec; backs `model-compute` crate in larql (universal, arm32-safe) |
@@ -74,7 +74,7 @@ Sibling forks for extending/reducing LARQL and realizing the round-trip. Documen
 
 **Note on graphify**: transforms GitHub repositories into queryable knowledge graphs. This implements the core insight that a GitHub repo is a graph database — graphify is the distillation step before LARQL compiles the graph to a vindex.
 
-**Note on Oxigraph**: needs to be forked into the metavacua namespace (`oxigraph/oxigraph`). Provides the SPARQL execution layer that connects CategoricalReasoner's SPARQL operations to the Rust pipeline.
+**Note on Oxigraph**: forked at [metavacua/oxigraph](https://github.com/metavacua/oxigraph). Provides the SPARQL execution layer that connects CategoricalReasoner's SPARQL operations to the Rust pipeline.
 
 ## Cluster 3 — Coding Agent Harness Layer
 
