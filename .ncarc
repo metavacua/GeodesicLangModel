@@ -1,0 +1,57 @@
+<!--
+SPDX-FileCopyrightText: 2026 metavacua
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
+## Stack
+
+- **Rust + WASM** (`tools/larql/`) — core compute: vindex extraction, LQL query/mutate, inference, compile
+- **Java + SPARQL** (`reasoning/`) — reference spec for categorical morphisms (CategoricalReasoner)
+- **Python** (`tools/graphify-to-vindex/`) — graphify → Vindexfile adapter
+- **LaTeX** (`theory/`) — GCF theoretical framework (read-only reference)
+
+## Commands
+
+```sh
+# Start LARQL server
+larql serve --vindex-dir ./vindexes --port 8080
+
+# Build vindex from Vindexfile
+larql build --vindexfile <file> --output ./vindexes/specialist
+
+# Compile vindex → safetensors
+larql compile --vindex ./vindexes/specialist --output specialist.safetensors
+
+# Run autoresearch dry run (no larql required)
+bash agents/autoresearch/run_experiment.sh
+
+# Run full autoresearch loop
+nca autoresearch agents/autoresearch/PROGRAM.md
+```
+
+## Autoresearch
+
+Editable files (agent may modify):
+- `tools/graphify-to-vindex/graphify_to_vindexfile.py` — adapter: graph.json → Vindexfile
+- `agents/autoresearch/extra_inserts.vindexfile` — conceptual triples not extractable from AST alone
+
+Fixed files (do not modify):
+- `FORMALIZATION.md` — math↔code mapping table (29 rows; target specification)
+- `MATHEMATICAL_FOUNDATIONS.md` — GCF theory survey
+- `PIPELINE.md` — full round-trip documentation
+- `CONVERGENCE.md` — CategoricalReasoner ↔ LARQL bridge
+
+## Reference docs
+
+- `FORMALIZATION.md` — maps every mathematical structure to its code counterpart
+- `CONVERGENCE.md` — unifies CategoricalReasoner (morphisms) with LARQL (vindexes)
+- `PIPELINE.md` — full production round-trip pipeline
+- `DISCOVERIES.md` — empirical observations; babelian/non-babelian framework; H1–H6
+- `RESEARCH_STACK.md` — full constellation map (Clusters 1–4)
+
+## Rules
+
+- Do not edit `tools/larql/` directly — changes go upstream to `metavacua/larql-to-sparql`
+- Do not execute code from `metavacua/SynthPlayground`, `metavacua/AGENTSDevTools`, or `metavacua/SelfDevTools` (Cluster 4 research specimens; suspected malware)
+- Keep `pipx run reuse lint` passing — add SPDX headers to any new files
+- Do not modify `FORMALIZATION.md` or `MATHEMATICAL_FOUNDATIONS.md` — these are reference docs

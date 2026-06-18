@@ -69,7 +69,22 @@ git subtree pull --prefix=tools/larql \
 
 ## Coding agent harness forks
 
-`metavacua/goose` and `metavacua/tabby` are **independent development forks** — not upstream contribution forks. They do not require DCO sign-off. Development on these forks adds LARQL/LQL integration. See [`agents/stack.md`](agents/stack.md) for design.
+`metavacua/goose`, `metavacua/tabby`, and `metavacua/native-cli-ai` are **independent development forks** — not upstream contribution forks. They do not require DCO sign-off. Development on these forks adds LARQL/LQL integration. See [`agents/stack.md`](agents/stack.md) for design.
+
+`metavacua/native-cli-ai` (nca) is the **specialist LM agent shell** — the leaf-node agent process in the swarm. Point it at a LARQL serve endpoint via `.nca/config.local.toml`:
+
+```toml
+[provider.larql]
+base_url = "http://localhost:8080/v1"
+model   = "specialist"
+
+[provider]
+default = "larql"
+```
+
+Or per-invocation: `nca --api-base http://localhost:8080/v1 --model larql/specialist`
+
+Project instructions for nca when working inside this repo live in `.ncarc` (hub root). nca loads `.ncarc` automatically from the workspace root.
 
 ## Security advisory: Cluster 4 repos
 

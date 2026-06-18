@@ -169,6 +169,50 @@ without LARQL itself needing to implement all GPU backends.
 web-llm consumes mlc-compiled models, runs them in WebGPU/WebAssembly, and exposes
 an OpenAI-compatible API from inside the browser. The swarm runs client-side.
 
+## nca fork — Specialist LM Agent Shell
+
+### Role
+
+nca is the leaf-node agent process in the swarm. One nca instance per specialist
+vindex; each pointed at a running `larql serve` endpoint.
+
+### Provider override
+
+```toml
+# .nca/config.local.toml  (workspace, gitignored)
+[provider.larql]
+base_url    = "http://localhost:8080/v1"
+model       = "specialist"
+api_key_env = "LARQL_API_KEY"  # larql serve accepts any non-empty value
+
+[provider]
+default = "larql"
+```
+
+### Level 2 routing (multi-specialist)
+
+goose selects the target specialist via LQL cosine similarity, then delegates:
+
+```sh
+TARGET_PORT=$(larql lql "USE VINDEX 'vindexes/routing'; \
+  SELECT TOP 1 port FROM specialists \
+  ORDER BY cosine_similarity('$(cat task.md)', label) DESC")
+
+nca --api-base "http://localhost:$TARGET_PORT/v1" \
+    --model larql/specialist \
+    run --prompt "$(cat task.md)"
+```
+
+### Autoresearch integration
+
+The self-referential autoresearch loop at `agents/autoresearch/` uses nca as its
+agent shell. See `agents/autoresearch/README.md` for the bootstrap procedure and
+the iteration protocol.
+
+### Project instructions
+
+The hub root `.ncarc` provides nca with stack context when operating in this repo.
+
 ## Query Synthesis Summary
 
 The four synthesis surfaces work together:

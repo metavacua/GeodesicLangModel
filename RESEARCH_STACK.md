@@ -37,10 +37,10 @@ Full map of the GeodesicLangModel research constellation — organized around th
   ┌──────▼──────────┐  ┌───▼────────────────────────┐
   │ graphify        │  │ goose (fork)               │
   │ Oxigraph        │  │ tabby (fork)               │
-  │ mlc-llm (fork)  │  │ web-llm (fork)             │
-  │ web-llm (fork)  │  │ open-deep-research (fork)  │
-  │ wasmspec (fork) │  └────────────────────────────┘
-  │ seaography (fork│
+  │ mlc-llm (fork)  │  │ nca (fork)                 │
+  │ web-llm (fork)  │  │ web-llm (fork)             │
+  │ wasmspec (fork) │  │ open-deep-research (fork)  │
+  │ seaography (fork│  └────────────────────────────┘
   │ async-graphql   │
   │ graphql-parser  │
   └─────────────────┘
@@ -84,6 +84,7 @@ Sibling forks for orientation, knowledge construction, and agent execution. Thes
 |------|--------|------|
 | goose | [metavacua/goose](https://github.com/metavacua/goose) | AI agent framework (fork of AAIF/goose); extended with LARQL tools via MCP extension (`crates/goose-mcp/`) |
 | tabby | [metavacua/tabby](https://github.com/metavacua/tabby) | Self-hosted coding assistant (fork of TabbyML/tabby); LARQL-backed completions from vindex |
+| nca | [metavacua/native-cli-ai](https://github.com/metavacua/native-cli-ai) *(fork of madebyaris/native-cli-ai)* | **Specialist LM agent shell**: leaf-node agent process in the swarm; each instance pointed at a `larql serve` endpoint via `--api-base`; provides `nca autoresearch` for metric-driven vindex optimisation |
 | web-llm | [metavacua/web-llm](https://github.com/metavacua/web-llm) | *(also in Cluster 2)* browser-side deployment of JIT-compiled specialist LMs for agents |
 | open-deep-research | [metavacua/open-deep-research-jules-btahir](https://github.com/metavacua/open-deep-research-jules-btahir) | **Orientation + knowledge construction**: deep research from web/docs; combined with SPARQL/LARQL/GraphQL/SQL synthesis to construct specialist LMs from Wikimedia dumps JIT |
 

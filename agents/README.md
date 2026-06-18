@@ -61,6 +61,25 @@ the LARQL pipeline. The integration replaces the retrieval backend with LARQL:
 - This tests H5 (RAG navigation failure) in a live coding context
 - Self-hosted; vindex-backed completions avoid cloud dependency
 
+### nca (`metavacua/native-cli-ai`) — **specialist LM agent shell**
+
+Fork of madebyaris/native-cli-ai. nca is the **leaf-node** agent process in the
+swarm; goose is the coordinator:
+
+```
+goose (coordinator)
+    ↓ route via LQL cosine similarity
+nca --api-base http://localhost:8081/v1  →  specialist_v1 (repo-A vindex)
+nca --api-base http://localhost:8082/v1  →  specialist_v2 (repo-B vindex)
+nca --api-base http://localhost:8083/v1  →  specialist_v3 (domain-C vindex)
+```
+
+Each nca instance uses an OpenAI-compatible provider config (`[provider.larql]`)
+that points at a running `larql serve` process. The autoresearch loop
+(`agents/autoresearch/`) already uses nca as its agent shell (see
+`agents/autoresearch/README.md`). The same provider override bootstraps any
+number of parallel specialist agents from a single nca binary.
+
 ### open-deep-research (`metavacua/open-deep-research-jules-btahir`)
 
 The **orientation layer**. Before a task is executed:
